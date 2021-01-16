@@ -1,0 +1,26 @@
+create block 
+  > creates block with no transactions > create transaction 
+    > adds pending transaction to block > create new block 
+      > creates new block and mines previous block moving pending transactions to blockchain
+
+hashing block using SHA256
+  > hashing function will hash data and return fixed length string of seemingly random characters using SHA256 crytograph
+   > returned hash will always be same for given string
+
+proof of work
+  > will take current blocks data (in a hash) then generate a specific hash that will need to meet certain requirement
+    > only way to do this is by trial and error
+     > will have to run hash block method many times to hit correct hash
+      > continuously change nonce value until it finds correct value
+       > then return the nonce value which created the correct hash
+        > this secures blockchain, as takes lots of power to generate hash for specific block
+         > not feasible to go back to change a transaction or data to give themselves more bitcoin as would take lots of energy and time
+          > also to succeed they would have to change every block after the genesis up to the block they are changing
+           > as blocks are linked or chained by their data - this would takes ridic amounts of energy and time and not feasible whatsoever
+
+           https://www.reddit.com/r/explainlikeimfive/comments/7it6ev/eli5_what_is_proofofwork_and_proofofstake_and/
+
+genesis block
+  > first block in blockchain
+    > created on blockchain creation
+            

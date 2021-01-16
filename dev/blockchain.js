@@ -1,6 +1,9 @@
+const SHA256 = require('sha256')
+
 function Blockchain() {
   this.chain = [];
   this.pendingTransactions = [];
+  this.createNewBlock(100, '0GENESIS', '0GENESIS');
 }
 
 /**
@@ -48,6 +51,36 @@ Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) 
   }
   this.pendingTransactions.push(newTransaction)
   return this.getLastBlock()['index'] + 1
+}
+
+/**
+ * Creates hash string from a block from the blockchain
+ * @param {string} previousBlockHash - hash of previously block
+ * @param {Array} currentBlockData - current block data
+ * @param {number} nonce - nonce - number which represents a proof of work using a p.o.w method
+ * @returns {string} - returns hash string
+ */
+Blockchain.prototype.hashBlock = function(previousBlockHash, currentBlockData, nonce) {
+  const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
+  const hash = SHA256(dataAsString);
+  return hash
+}
+
+/**
+ * Proof of work method repeatedly hashs block until it finds correct hash
+ * then returns nonce value with attributed to correct hash
+ * @param {string} previousBlockHash - hash of previous block
+ * @param {array} currentBlockData - current block data
+ */
+Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData) {
+  let nonce = 0;
+  let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce)
+  while(hash.substring(0,4) != '0000') {
+    nonce++;
+    hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    console.log(hash)
+  }
+  return nonce;
 }
 
 module.exports = Blockchain;
