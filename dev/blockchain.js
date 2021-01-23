@@ -7,7 +7,7 @@ function Blockchain() {
   this.pendingTransactions = [];
   this.currentNodeUrl = currentNodeUrl;
   this.networkNodes = [];
-  this.createNewBlock(0, "0GENESIS", "0GENESIS");
+  this.createNewBlock(100, "0GENESIS", "0GENESIS");
 }
 
 /**
@@ -138,7 +138,18 @@ Blockchain.prototype.chainIsValid = function (blockchain) {
     if (blockHash.substring(0, 4) !== '0000') validChain = false
     if (currentBlock["previousBlockHash"] !== previousBlock["hash"])
       validChain = false;
+    console.log('previousBlockHash => ', previousBlock['hash']);
+    console.log('currentBlockHash =>', currentBlock['hash']);
   }
+  
+  const genesisBlock = blockchain[0];
+  const correctNonce = genesisBlock['nonce'] === 100;
+  const correctPrevBlockHash = genesisBlock['previousBlockHash'] === '0GENESIS';
+  const correctHash = genesisBlock['hash'] === '0GENESIS';
+  const correctTransactions = genesisBlock['transactions'].length === 0;
+  
+  if(!correctNonce || !correctPrevBlockHash || !correctHash || !correctTransactions) validChain = false;
+
   return validChain
 };
 
