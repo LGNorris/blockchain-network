@@ -1,5 +1,5 @@
-const SHA256 = require('sha256')
-const currentNodeUrl = process.argv[3]
+const SHA256 = require("sha256");
+const currentNodeUrl = process.argv[3];
 const { v4: uuidv4 } = require("uuid");
 
 function Blockchain() {
@@ -7,7 +7,7 @@ function Blockchain() {
   this.pendingTransactions = [];
   this.currentNodeUrl = currentNodeUrl;
   this.networkNodes = [];
-  this.createNewBlock(100, '0GENESIS', '0GENESIS');
+  this.createNewBlock(0, "0GENESIS", "0GENESIS");
 }
 
 /**
@@ -17,28 +17,32 @@ function Blockchain() {
  * @param {string} hash - unique hash of this block
  */
 
-Blockchain.prototype.createNewBlock = function (nonce, previousBlockHash, hash) {
+Blockchain.prototype.createNewBlock = function (
+  nonce,
+  previousBlockHash,
+  hash
+) {
   const newBlock = {
     index: this.chain.length + 1,
     timestamp: Date.now(),
     transactions: this.pendingTransactions,
     nonce: nonce,
     hash: hash,
-    previousBlockHash: previousBlockHash
+    previousBlockHash: previousBlockHash,
   };
   this.pendingTransactions = [];
-  this.chain.push(newBlock)
+  this.chain.push(newBlock);
   return newBlock;
-}
+};
 
 /**
  * Return last block on blockchain
  * @returns {object} - returns last block object on block chain
  */
 
-Blockchain.prototype.getLastBlock = function ()  {
-  return this.chain[this.chain.length - 1]
-}
+Blockchain.prototype.getLastBlock = function () {
+  return this.chain[this.chain.length - 1];
+};
 
 /**
  * Create new transaction prior to next block creation
@@ -47,21 +51,27 @@ Blockchain.prototype.getLastBlock = function ()  {
  * @param {string} recipient  - address of person who is receiving the transaction
  */
 
-Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) {
+Blockchain.prototype.createNewTransaction = function (
+  amount,
+  sender,
+  recipient
+) {
   const newTransaction = {
     amount: amount,
     sender: sender,
     recipient: recipient,
-    transactionId: uuidv4().split('-').join('')
-  }
+    transactionId: uuidv4().split("-").join(""),
+  };
 
- return newTransaction;
-}
+  return newTransaction;
+};
 
-Blockchain.prototype.addTransactionToPendingTransactions = function (transactionObj) {
+Blockchain.prototype.addTransactionToPendingTransactions = function (
+  transactionObj
+) {
   this.pendingTransactions.push(transactionObj);
-  return this.getLastBlock()['index'] + 1;
-}
+  return this.getLastBlock()["index"] + 1;
+};
 
 /**
  * Creates hash string from a block from the blockchain
@@ -70,12 +80,18 @@ Blockchain.prototype.addTransactionToPendingTransactions = function (transaction
  * @param {number} nonce - nonce - number which represents a proof of work using a p.o.w method
  * @returns {string} - returns hash string
  */
-Blockchain.prototype.hashBlock = function(previousBlockHash, currentBlockData, nonce) {
-  const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
+
+Blockchain.prototype.hashBlock = function (
+  previousBlockHash,
+  currentBlockData,
+  nonce
+) {
+  const dataAsString =
+    previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
   const hash = SHA256(dataAsString);
 
-  return hash
-}
+  return hash;
+};
 
 /**
  * Proof of work method repeatedly hashs block until it finds correct hash
@@ -83,16 +99,47 @@ Blockchain.prototype.hashBlock = function(previousBlockHash, currentBlockData, n
  * @param {string} previousBlockHash - hash of previous block
  * @param {array} currentBlockData - current block data
  */
-Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData) {
+
+Blockchain.prototype.proofOfWork = function (
+  previousBlockHash,
+  currentBlockData
+) {
   let nonce = 0;
-  let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce)
-  while(hash.substring(0,4) != '0000') {
+  let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+  while (hash.substring(0, 4) != "0000") {
     nonce++;
     hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
-    console.log(hash)
+    console.log(hash);
   }
 
   return nonce;
-}
+};
+
+/**
+ * @param {object} - blockchain object
+ * @return {boolean} - returns boolean representing whether blockchain is valid
+ */
+
+Blockchain.prototype.chainIsValid = function (blockchain) {
+  let validChain = true;
+
+  for (var i = 1; i < blockchain.length; i++) {
+    const currentBlock = blockchain[i];
+    const previousBlock = blockchain[i - 1];
+
+    const blockHash = this.hashBlock(
+      previousBlock["hash"],
+      {
+        transactions: currentBlock["transactions"],
+        index: currentBlock["index"],
+      },
+      currentBlock["nonce"]
+    );
+    if (blockHash.substring(0, 4) !== '0000') validChain = false
+    if (currentBlock["previousBlockHash"] !== previousBlock["hash"])
+      validChain = false;
+  }
+  return validChain
+};
 
 module.exports = Blockchain;
