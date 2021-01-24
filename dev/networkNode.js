@@ -237,7 +237,7 @@ app.get("/consensus", function (req, res) {
         note: "Current chain has not been replaced.",
         chain: bitcoin.chain,
       });
-    } else if (newLongestChain && bitcoin.chainIsValid(newLongestChain)) {
+    } else {
       bitcoin.chain = newLongestChain;
       bitcoin.pendingTransactions = newPendingTransactions;
       res.json({
@@ -245,9 +245,24 @@ app.get("/consensus", function (req, res) {
         chain: bitcoin.chain
       })
     };
-
   });
 });
+
+
+// Endpoints for blockchain explorer
+
+app.get('/block/:blockChain', function (req, res) {
+  
+});
+
+app.get('/transaction/:transactionId', function (req, res) {
+  
+});
+
+app.get('/address/:address', function (req, res) {
+  
+});
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
