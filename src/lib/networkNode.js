@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const Blockchain = require("./blockchain");
 const rp = require("request-promise");
 const { v4: uuidv4 } = require("uuid");
-const { request } = require("express");
 
 const port = process.argv[2];
 
