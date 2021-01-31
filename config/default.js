@@ -9,5 +9,6 @@ module.exports = {
     cluster_instances: process.env.CLUSTER_INSTANCES || null,
     port: process.env.PORT || 3001,
     cors_origin: process.env.CORS_ORIGIN,
+    ip: process.env.IP
   }
 }
