@@ -10,9 +10,9 @@
     "node_4": "nodemon --watch dev -e js dev/networkNode.js 3004 http://localhost:3004",
     "node_5": "nodemon --watch dev -e js dev/networkNode.js 3005 http://localhost:3005",
     "start": "cross-env NODE_ENV=production node dist/index.js http://localhost:3001",
-    "dev": "cross-env NODE_ENV=development PORT=3000 nodemon dist/index.ts http://localhost:3000",
-    "dev_2": "cross-env NODE_ENV=development PORT=3001 nodemon dist/index.ts http://localhost:3001",
-    "dev_3": "cross-env NODE_ENV=development PORT=3002 nodemon dist/index.ts http://localhost:3002",
+    "dev": "cross-env NODE_ENV=development PORT=3000 nodemon dist/index.js http://localhost:3000",
+    "dev_2": "cross-env NODE_ENV=development PORT=3001 nodemon dist/index.js http://localhost:3001",
+    "dev_3": "cross-env NODE_ENV=development PORT=3002 nodemon dist/index.js http://localhost:3002",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "clean": "rm -rf ./dist/* "
