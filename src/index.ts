@@ -10,8 +10,8 @@ const run = async () => {
   masterLog.info(`Logs level: ${(config.get('settings.log_level') + '' ).blue}`)
   const port = Number(config.get('settings.port'));
   const cpuCount = os.cpus().length;
-  const poolSize = Number(config.get('settings.cluster_instances') || cpuCount);
-
+  //const poolSize = Number(config.get('settings.cluster_instances') || cpuCount);
+  const poolSize = 1;
   masterLog.info(`Total CPU's: ${cpuCount.toString().blue.bold} `)
   masterLog.info(`Worker pool count: ${poolSize.toString().blue.bold} `);
   
