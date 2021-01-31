@@ -6,6 +6,7 @@ import express from "express";
 import limit from "express-rate-limit";
 import config from "config";
 import rp from "request-promise";
+import os from "os"
 import { v4 as uuidv4 } from "uuid";
 
 import { masterLog, allLog, log } from "./logger";
@@ -16,6 +17,10 @@ import Blockchain from "./lib/blockchain";
 const nodeAddress = uuidv4().split("-").join("");
 
 const blockchain = new Blockchain();
+
+var networkInterfaces = os.networkInterfaces();
+
+console.log(networkInterfaces);
 
 export default class Node {
   instance: express.Express;
