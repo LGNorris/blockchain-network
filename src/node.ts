@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { masterLog, allLog, log } from "./logger";
 
 //@ts-ignore
-import Blockchain from "./lib/Blockchain";
+import Blockchain from "./lib/blockchain";
 
 const nodeAddress = uuidv4().split("-").join("");
 
@@ -255,7 +255,6 @@ export default class Node {
         let newLongestChain = null;
         let newPendingTransactions = null;
         blockchains.forEach((currentBlockchain) => {
-          console.log(Object.keys(currentBlockchain.blockchain))
           if (currentBlockchain.blockchain.chain.length > maxChainLength) {
             maxChainLength = currentBlockchain.blockchain.chain.length;
             newLongestChain = currentBlockchain.blockchain.chain;
