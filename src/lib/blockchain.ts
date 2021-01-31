@@ -1,12 +1,13 @@
 const SHA256 = require("sha256");
-const ip = require('ip')
 const currentNodeUrl = process.argv[2];
 const { v4: uuidv4 } = require("uuid");
+
+const nodeName = process.env.IP + '/' + process.env.PORT;
 
 function Blockchain(this: any) {
   this.chain = [];
   this.pendingTransactions = [];
-  this.currentNodeUrl = ip.address()
+  this.currentNodeUrl = nodeName || currentNodeUrl
   this.networkNodes = [];
   this.createNewBlock(100, "0GENESIS", "0GENESIS");
 }

@@ -18,10 +18,6 @@ const nodeAddress = uuidv4().split("-").join("");
 
 const blockchain = new Blockchain();
 
-var networkInterfaces = os.networkInterfaces();
-
-console.log(networkInterfaces);
-
 export default class Node {
   instance: express.Express;
 

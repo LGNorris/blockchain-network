@@ -50,9 +50,17 @@
 
 # Our first stage, that is the Builder
 
+
+
 FROM node:8-alpine AS ts-sample-builder
-ENV CORS_ORIGIN http://localhost:3001
-ENV PORT 3001
+
+ARG PORT
+ARG CORS_ORIGIN
+ARG IP
+
+ENV CORS_ORIGIN=${CORS_ORIGIN}
+ENV PORT=${PORT}
+ENV IP=${IP}
 
 WORKDIR /app
 COPY . .
@@ -62,8 +70,14 @@ RUN npm run build
 
 # Our Second stage, that creates an image for production
 FROM node:8-alpine AS ts-sample-prod
-ENV CORS_ORIGIN http://localhost:3001
-ENV PORT 3001
+
+ARG PORT
+ARG CORS_ORIGIN
+ARG IP
+
+ENV CORS_ORIGIN=${CORS_ORIGIN}
+ENV PORT=${PORT}
+ENV IP=${IP}
 
 WORKDIR /app
 COPY --from=ts-sample-builder ./app/dist ./dist
