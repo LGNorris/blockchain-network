@@ -86,5 +86,5 @@ COPY --from=ts-sample-builder ./app/config ./config
 COPY package* ./
 RUN npm install --production
 
-EXPOSE 80
+EXPOSE 8080
 CMD ["npm", "start"]
