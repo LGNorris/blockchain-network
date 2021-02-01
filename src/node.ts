@@ -139,6 +139,7 @@ export default class Node {
             },
             json: true,
           };
+          console.log(requestOptions)
           return rp(requestOptions);
         })
         .then((data) => {
@@ -146,7 +147,10 @@ export default class Node {
             note: "New block mined successfully",
             block: newBlock,
           });
-        });
+        })
+        .catch(error => {
+          console.error(error.message)
+        }); 
     });
 
     this.instance.post("/receive-new-block", function (req, res) {
