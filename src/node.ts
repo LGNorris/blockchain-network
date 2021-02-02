@@ -114,7 +114,6 @@ export default class Node {
       );
 
       const requestPromises: any[] = [];
-
       blockchain.networkNodes.forEach((networkNodeUrl: string) => {
         const requestOptions = {
           uri: networkNodeUrl + "/receive-new-block",
@@ -139,7 +138,6 @@ export default class Node {
             },
             json: true,
           };
-          console.log(requestOptions)
           return rp(requestOptions);
         })
         .then((data) => {

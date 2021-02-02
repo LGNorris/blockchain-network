@@ -2,7 +2,7 @@ const SHA256 = require("sha256");
 const currentNodeUrl = process.argv[2];
 const { v4: uuidv4 } = require("uuid");
 
-const nodeName = 'http://' + process.env.IP + ':' + process.env.PORT;
+const nodeName = 'http://' + process.env.IP
 
 function Blockchain(this: any) {
   this.chain = [];
@@ -111,9 +111,8 @@ Blockchain.prototype.proofOfWork = function (
   while (hash.substring(0, 4) != "0000") {
     nonce++;
     hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
-    console.log(hash);
   }
-
+  console.log(nonce)
   return nonce;
 };
 
