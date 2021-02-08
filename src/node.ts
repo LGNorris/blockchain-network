@@ -55,6 +55,37 @@ export default class Node {
       res.send({ blockchain });
     });
 
+    this.instance.get('/blockchain/stats', function (req, res) {
+      const blockchainHeight = blockchain.chain.length;
+      const totalBlocks = blockchainHeight;
+      const totalconfirmedTransactions: any[] = [];
+      const totalPendingTransactions = blockchain.pendingTransactions.length;
+
+      let totalAmount = null;
+      
+      blockchain.chain.forEach((element: { [x: string]: any[]; }) => {
+        for (const property in element) {
+          if (property === 'transactions') {
+            if (element[property].length > 0) {
+              totalconfirmedTransactions.push((element[property][0]));
+            }
+          }
+        }
+      });
+
+      let totalArray: any[] = [];
+      totalconfirmedTransactions.forEach(element => {
+        totalArray.push(element['amount'])
+      })
+
+      totalAmount = totalArray.reduce((a, b) => a + b, 0)
+
+      res.send({
+        totalConfirmedTransactions: totalconfirmedTransactions.length,
+        totalAmount: totalAmount
+      })
+    })
+
     this.instance.post("/transaction", function (req, res) {
       const newTransaction = req.body;
       const blockIndex = blockchain.addTransactionToPendingTransactions(
