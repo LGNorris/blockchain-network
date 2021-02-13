@@ -1,2 +1,2 @@
 # blockchain-network
-Working Blockchain network and explorer
+Working blockchain network and api service
