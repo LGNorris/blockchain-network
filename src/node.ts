@@ -120,6 +120,7 @@ export default class Node {
           note: "Transaction created and broadcast successfully.",
         });
       });
+      log.info("Transaction created and broadcast");
     });
 
     this.instance.get("/mine", function (req, res) {
@@ -180,6 +181,7 @@ export default class Node {
         .catch(error => {
           console.error(error.message)
         }); 
+        log.info("New block mined ");
     });
 
     this.instance.post("/receive-new-block", function (req, res) {
@@ -243,6 +245,7 @@ export default class Node {
             note: "New node registered with network successfully",
           });
         });
+        log.info("New node registered with network successfully")
     });
 
     this.instance.post("/register-node", function (req, res) {
@@ -355,7 +358,7 @@ export default class Node {
   start = (port: number, name: string) => {
     if (cluster.isMaster)
       log.info(
-        `Blockchain node: Listening for activity on http://localhost:${
+        `Blockchain node: Listening for activity on ${
           port.toString().green
         }`
       );
