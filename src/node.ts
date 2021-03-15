@@ -81,7 +81,7 @@ export default class Node {
       totalAmount = totalArray.reduce((a, b) => a + b, 0)
 
       res.send({
-        totalConfirmedTransactions: totalconfirmedTransactions.length,
+        totalConfirmedTransactions: totalconfirmedTransactions,
         totalAmount: totalAmount
       })
     })
@@ -342,6 +342,22 @@ export default class Node {
       const addressData = blockchain.getAddressData(address);
       res.json({
         addressData: addressData,
+      })
+    });
+
+    this.instance.get('/transactions', function (req, res) {
+      const totalconfirmedTransactions: any[] = [];
+      blockchain.chain.forEach((element: { [x: string]: any[]; }) => {
+        for (const property in element) {
+          if (property === 'transactions') {
+            if (element[property].length > 0) {
+              totalconfirmedTransactions.push((element[property][0]));
+            }
+          }
+        }
+      });
+      res.json({
+        transactions: totalconfirmedTransactions,
       })
     });
   }
