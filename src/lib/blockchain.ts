@@ -9,6 +9,7 @@ function Blockchain(this: any) {
   this.pendingTransactions = [];
   this.currentNodeUrl = nodeName || currentNodeUrl
   this.networkNodes = [];
+  this.id = 'GENESIS'
   this.createNewBlock(100, "0GENESIS", "0GENESIS");
 }
 
@@ -30,6 +31,7 @@ Blockchain.prototype.createNewBlock = function (
     transactions: this.pendingTransactions,
     nonce: nonce,
     hash: hash,
+    id: hash,
     previousBlockHash: previousBlockHash,
   };
   this.pendingTransactions = [];
