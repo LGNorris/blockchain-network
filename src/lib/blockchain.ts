@@ -2,7 +2,7 @@ const SHA256 = require("sha256");
 const currentNodeUrl = process.argv[2];
 const { v4: uuidv4 } = require("uuid");
 
-const nodeName = 'http://' + process.env.IP
+const nodeName = 'http://' + process.env.IP + ':' + process.env.PORT
 
 function Blockchain(this: any) {
   this.chain = [];
@@ -100,7 +100,7 @@ Blockchain.prototype.hashBlock = function (
 
 /**
  * Proof of work method repeatedly hashs block until it finds correct hash
- * then returns nonce value with attributed to correct hash
+ * then returns nonce value which attributed to correct hash
  * @param {string} previousBlockHash - hash of previous block
  * @param {array} currentBlockData - current block data
  */
