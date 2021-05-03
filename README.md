@@ -1,8 +1,6 @@
 ![Logo for github repo](/public/logo.png "Blockchain network demonstrator")
 
-# Blockchain network demonstrator
-
-This is a blockchain network implemented in Javascript with the idea behind this projects being to explore and demonstrate the concepts behind basic decentralised blockchains using Javascript. This code allows you to deploy an instance of a blockchain with the following features:
+This is a blockchain network implemented in Javascript with the idea behind this projects being to explore and demonstrate the concepts behind basic decentralised blockchains using Javascript. This software allows you to create an instance of a blockchain with the following features:
 
 - 'Proof Of Work' and hashing algorithms to secure the network and also the data within the blockchain
 - Methods to create/send and store transactions in blocks
