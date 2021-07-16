@@ -174,6 +174,7 @@ export default class Node {
             },
             json: true,
           };
+          console.log(requestOptions)
           return rp(requestOptions);
         })
         .then((data) => {
