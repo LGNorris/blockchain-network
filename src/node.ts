@@ -184,7 +184,12 @@ export default class Node {
             },
             json: true,
           };
-          return rp(requestOptions);
+          try {
+            return rp(requestOptions);
+          }
+          catch (err) {
+            console.log(err)
+          }
         })
         .then((data) => {
           res.json({
