@@ -140,8 +140,14 @@ export default class Node {
         nonce
       );
 
-      console.log(blockHash)
-
+      console.log([
+        lastBlock,
+        previousBlockHash,
+        currentBlockData,
+        nonce,
+        blockHash,
+      ])
+      console.log(nodeAddress)
       blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
 
       const newBlock = blockchain.createNewBlock(
@@ -149,6 +155,8 @@ export default class Node {
         previousBlockHash,
         blockHash
       );
+
+      console.log(newBlock)
 
       const requestPromises: any[] = [];
       blockchain.networkNodes.forEach((networkNodeUrl: string) => {
