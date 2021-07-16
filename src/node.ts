@@ -15,6 +15,7 @@ import { masterLog, allLog, log } from "./logger";
 import Blockchain from "./lib/blockchain";
 
 const nodeAddress = uuidv4().split("-").join("");
+console.log(nodeAddress)
 
 const blockchain = new Blockchain();
 
@@ -91,6 +92,7 @@ export default class Node {
       const blockIndex = blockchain.addTransactionToPendingTransactions(
         newTransaction
       );
+      console.log(newTransaction)
       res.json({
         note: `Transaction will be added in block ${blockIndex}`,
       });
@@ -102,6 +104,7 @@ export default class Node {
         req.body.sender,
         req.body.recipient
       );
+      console.log(newTransaction)
       blockchain.addTransactionToPendingTransactions(newTransaction);
 
       const requestPromises: any[] = [];
