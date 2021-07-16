@@ -91,7 +91,6 @@ export default class Node {
       const blockIndex = blockchain.addTransactionToPendingTransactions(
         newTransaction
       );
-      console.log(newTransaction)
       res.json({
         note: `Transaction will be added in block ${blockIndex}`,
       });
@@ -103,11 +102,8 @@ export default class Node {
         req.body.sender,
         req.body.recipient
       );
-      console.log(newTransaction)
       blockchain.addTransactionToPendingTransactions(newTransaction);
-
       const requestPromises: any[] = [];
-
       try {
         blockchain.networkNodes.forEach((networkNodeUrl: string) => {
           const requestOptions = {
@@ -116,7 +112,6 @@ export default class Node {
             body: newTransaction,
             json: true,
           };
-          console.log(requestOptions)
           requestPromises.push(rp(requestOptions));
         });
         Promise.all(requestPromises).then((data) => {
@@ -143,15 +138,6 @@ export default class Node {
         currentBlockData,
         nonce
       );
-
-      console.log([
-        lastBlock,
-        previousBlockHash,
-        currentBlockData,
-        nonce,
-        blockHash,
-      ])
-      console.log(nodeAddress)
       blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
 
       const newBlock = blockchain.createNewBlock(
@@ -159,8 +145,6 @@ export default class Node {
         previousBlockHash,
         blockHash
       );
-
-      console.log(newBlock)
 
       const requestPromises: any[] = [];
       blockchain.networkNodes.forEach((networkNodeUrl: string) => {
@@ -174,10 +158,9 @@ export default class Node {
         };
         requestPromises.push(rp(requestOptions));
       });
-      console.log(requestPromises)
-
       Promise.all(requestPromises)
         .then((data) => {
+          console.log(data)
           const requestOptions = {
             uri: blockchain.currentNodeUrl + "/transaction/broadcast",
             method: "POST",
@@ -188,9 +171,11 @@ export default class Node {
             },
             json: true,
           };
-            return rp(requestOptions);
+          console.log(requestOptions)
+          return rp(requestOptions);
         })
         .then((data) => {
+          console.log('should be returning block')
           res.json({
             note: "New block mined successfully",
             block: newBlock,
