@@ -67,7 +67,7 @@ Blockchain.prototype.createNewTransaction = function (
     transactionId: uuidv4().split("-").join(""), 
     receivedTime: Date.now(),
   };
-
+  console.log(newTransaction)
   return newTransaction;
 };
 

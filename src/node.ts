@@ -139,7 +139,7 @@ export default class Node {
         nonce
       );
 
-      //blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
+      blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
 
       const newBlock = blockchain.createNewBlock(
         nonce,
@@ -148,7 +148,6 @@ export default class Node {
       );
 
       const requestPromises: any[] = [];
-      console.log(blockchain.networkNodes)
       blockchain.networkNodes.forEach((networkNodeUrl: string) => {
         const requestOptions = {
           uri: networkNodeUrl + "/receive-new-block",
@@ -162,7 +161,6 @@ export default class Node {
       });
       Promise.all(requestPromises)
         .then((data) => {
-          console.log(data)
           const requestOptions = {
             uri: blockchain.currentNodeUrl + "/transaction/broadcast",
             method: "POST",
@@ -173,7 +171,6 @@ export default class Node {
             },
             json: true,
           };
-          console.log(requestOptions)
           return rp(requestOptions);
         })
         .then((data) => {
