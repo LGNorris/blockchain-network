@@ -22,10 +22,12 @@ FROM node:8-alpine AS blockchain-node-prod
 ARG PORT
 ARG CORS_ORIGIN
 ARG IP
+ARG NODE_PORT
 
 ENV CORS_ORIGIN=${CORS_ORIGIN}
 ENV PORT=${PORT}
 ENV IP=${IP}
+ENV NODE_PORT=${NODE_PORT}
 
 WORKDIR /app
 COPY --from=blockchain-node-builder ./app/dist ./dist
