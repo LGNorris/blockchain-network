@@ -2,7 +2,7 @@ const SHA256 = require("sha256");
 const currentNodeUrl = process.argv[2];
 const { v4: uuidv4 } = require("uuid");
 
-const nodeName = 'http://' + process.env.IP + ':' + process.env.PORT
+const nodeName = 'http://' + process.env.IP + ':' + process.env.NODE_PORT
 
 function Blockchain(this: any) {
   this.chain = [];
