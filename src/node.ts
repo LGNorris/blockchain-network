@@ -138,7 +138,18 @@ export default class Node {
         currentBlockData,
         nonce
       );
-      blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
+      console.log([
+        lastBlock,
+        previousBlockHash,
+        currentBlockData,
+        nonce,
+        blockHash
+      ])
+      try {
+        blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
+      } catch (error) {
+        console.log(error)
+      }
 
       const newBlock = blockchain.createNewBlock(
         nonce,
@@ -147,6 +158,7 @@ export default class Node {
       );
 
       const requestPromises: any[] = [];
+      console.log(blockchain.networkNodes)
       blockchain.networkNodes.forEach((networkNodeUrl: string) => {
         const requestOptions = {
           uri: networkNodeUrl + "/receive-new-block",
@@ -180,11 +192,11 @@ export default class Node {
             note: "New block mined successfully",
             block: newBlock,
           });
+          log.info("New block mined ");
         })
         .catch(error => {
           console.error(error.message)
         }); 
-        log.info("New block mined ");
     });
 
     this.instance.post("/receive-new-block", function (req, res) {
