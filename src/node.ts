@@ -97,6 +97,9 @@ export default class Node {
     });
 
     this.instance.post("/transaction/broadcast", function (req, res) {
+      console.log([
+        req.body
+      ])
       const newTransaction = blockchain.createNewTransaction(
         req.body.amount,
         req.body.sender,

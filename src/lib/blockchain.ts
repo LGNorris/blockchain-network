@@ -74,8 +74,12 @@ Blockchain.prototype.createNewTransaction = function (
 Blockchain.prototype.addTransactionToPendingTransactions = function (
   transactionObj: any
 ) {
-  this.pendingTransactions.push(transactionObj);
-  return this.getLastBlock()["index"] + 1;
+  try {
+    this.pendingTransactions.push(transactionObj);
+    return this.getLastBlock()["index"] + 1;
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 /**
