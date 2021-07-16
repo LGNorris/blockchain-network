@@ -138,18 +138,8 @@ export default class Node {
         currentBlockData,
         nonce
       );
-      console.log([
-        lastBlock,
-        previousBlockHash,
-        currentBlockData,
-        nonce,
-        blockHash
-      ])
-      try {
-        blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
-      } catch (error) {
-        console.log(error)
-      }
+
+      //blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
 
       const newBlock = blockchain.createNewBlock(
         nonce,
