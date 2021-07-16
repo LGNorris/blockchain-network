@@ -108,21 +108,25 @@ export default class Node {
 
       const requestPromises: any[] = [];
 
-      blockchain.networkNodes.forEach((networkNodeUrl: string) => {
-        const requestOptions = {
-          uri: networkNodeUrl + "/transaction",
-          method: "POST",
-          body: newTransaction,
-          json: true,
-        };
-        console.log(requestOptions)
-        requestPromises.push(rp(requestOptions));
-      });
-      Promise.all(requestPromises).then((data) => {
-        res.json({
-          note: "Transaction created and broadcast successfully.",
+      try {
+        blockchain.networkNodes.forEach((networkNodeUrl: string) => {
+          const requestOptions = {
+            uri: networkNodeUrl + "/transaction",
+            method: "POST",
+            body: newTransaction,
+            json: true,
+          };
+          console.log(requestOptions)
+          requestPromises.push(rp(requestOptions));
         });
-      });
+        Promise.all(requestPromises).then((data) => {
+          res.json({
+            note: "Transaction created and broadcast successfully.",
+          });
+        });    
+      } catch (error) {
+        console.log(error)
+      }
       log.info("Transaction created and broadcast");
     });
 
@@ -184,12 +188,7 @@ export default class Node {
             },
             json: true,
           };
-          try {
             return rp(requestOptions);
-          }
-          catch (err) {
-            console.log(err)
-          }
         })
         .then((data) => {
           res.json({
@@ -208,19 +207,22 @@ export default class Node {
       const lastBlock = blockchain.getLastBlock();
       const correctHash = lastBlock.hash === newBlock.previousBlockHash;
       const correctIndex = lastBlock["index"] + 1 === newBlock["index"];
-
-      if (correctHash && correctIndex) {
-        blockchain.chain.push(newBlock);
-        blockchain.pendingTransactions = [];
-        res.json({
-          note: "New block received and accepted.",
-          newBlock: newBlock,
-        });
-      } else {
-        res.json({
-          note: "New block rejected.",
-          newBlock: newBlock,
-        });
+      try {
+        if (correctHash && correctIndex) {
+          blockchain.chain.push(newBlock);
+          blockchain.pendingTransactions = [];
+          res.json({
+            note: "New block received and accepted.",
+            newBlock: newBlock,
+          });
+        } else {
+          res.json({
+            note: "New block rejected.",
+            newBlock: newBlock,
+          });
+        }
+      } catch (error) {
+        console.log(error)
       }
     });
 
