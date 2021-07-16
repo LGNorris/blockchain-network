@@ -2,7 +2,7 @@ import cors from "cors";
 import helmet from "helmet";
 import cluster from "cluster";
 import bodyParser from "body-parser";
-import express from "express";
+import express, { request } from "express";
 import limit from "express-rate-limit";
 import config from "config";
 import rp from "request-promise";
@@ -15,7 +15,6 @@ import { masterLog, allLog, log } from "./logger";
 import Blockchain from "./lib/blockchain";
 
 const nodeAddress = uuidv4().split("-").join("");
-console.log(nodeAddress)
 
 const blockchain = new Blockchain();
 
@@ -116,6 +115,7 @@ export default class Node {
           body: newTransaction,
           json: true,
         };
+        console.log(requestOptions)
         requestPromises.push(rp(requestOptions));
       });
       Promise.all(requestPromises).then((data) => {
@@ -140,6 +140,8 @@ export default class Node {
         nonce
       );
 
+      console.log(blockHash)
+
       blockchain.createNewTransaction(12.5, "00REWARDS", nodeAddress);
 
       const newBlock = blockchain.createNewBlock(
@@ -160,6 +162,7 @@ export default class Node {
         };
         requestPromises.push(rp(requestOptions));
       });
+      console.log(requestPromises)
 
       Promise.all(requestPromises)
         .then((data) => {

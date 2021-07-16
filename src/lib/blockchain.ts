@@ -3,6 +3,7 @@ const currentNodeUrl = process.argv[2];
 const { v4: uuidv4 } = require("uuid");
 
 const nodeName = 'http://' + process.env.IP + ':' + process.env.PORT
+console.log(currentNodeUrl)
 console.log(nodeName)
 
 function Blockchain(this: any) {
