@@ -78,7 +78,7 @@ Open endpoints require no Authentication.
   
 # Demo explorer
 
-https://blockchn.info
+https://blockchn.info - No longer active as of 01-JAN-2023
 
 To compliment this we've have also created a front-end application which allows you to explorer the blockchain via its api. This application is a React / Next.js application. 
 
